@@ -3,8 +3,10 @@
 Replication of SARD model from paper: Deep Contextual Clinical Prediction with Reverse Distillation by Kodialam et al. [1]
 
 ### How to Install
-    * Install python dependancies from the requirements.txt file
-    * Install R requirements from renv.lock file
+    * Install python dependancies from the requirements.txt file with: 
+        pip install -r requirements.txt
+    * Install R requirements from renv.lock file with
+        renv::restore()
 
 ### How to Run
 
