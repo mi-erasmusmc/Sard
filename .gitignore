@@ -1,9 +1,28 @@
+# Result files and directories
+/SavedModels
+*.db
+/results
+*.ods
+*.png
+
+# data files
+data
+
+# config file
+config.yml
+
 # History files
 .Rhistory
 .Rapp.history
 
 # Session Data files
 .RData
+.Rprofile
+.idea/
+__pycache__/
+*__pycache__*
+catboost_info
+renv/
 
 # User-specific files
 .Ruserdata
@@ -37,3 +56,5 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+/Sard.Rproj
+/grid_search.pkl
