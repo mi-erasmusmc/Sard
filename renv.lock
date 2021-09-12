@@ -1,20 +1,35 @@
 {
   "R": {
+<<<<<<< HEAD
     "Version": "4.0.2",
     "Repositories": [
       {
         "Name": "CRAN",
         "URL": "http://Shr-Srv-CRAN/CRAN"
+=======
+    "Version": "4.1.0",
+    "Repositories": [
+      {
+        "Name": "CRAN",
+        "URL": "https://cloud.r-project.org"
+>>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
       }
     ]
   },
   "Packages": {
     "Andromeda": {
       "Package": "Andromeda",
+<<<<<<< HEAD
       "Version": "0.4.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "dec3b21532e9d7d6ebdf0ccdf8808af8"
+=======
+      "Version": "0.5.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "770d773d049662d2d1d13780f6f5e11c"
+>>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
     },
     "BH": {
       "Package": "BH",
@@ -47,8 +62,19 @@
     "FeatureExtraction": {
       "Package": "FeatureExtraction",
       "Version": "3.1.1",
+<<<<<<< HEAD
       "Source": "unknown",
       "Hash": "e526e1254ecb19d1363ff27a4ef7886d"
+=======
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "FeatureExtraction",
+      "RemoteUsername": "egillax",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "51953bbafd61e702714ba405e8ce47e1cd6dc9b1",
+      "Hash": "c2665de4e4fc064ad1e0615b7f72f14a"
+>>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
     },
     "Formula": {
       "Package": "Formula",
@@ -248,10 +274,17 @@
     },
     "cli": {
       "Package": "cli",
+<<<<<<< HEAD
       "Version": "2.3.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "3e3f28efcadfda442cd18651fbcbbecf"
+=======
+      "Version": "2.5.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "a94ba44cee3ea571e813721e64184172"
+>>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
     },
     "clipr": {
       "Package": "clipr",

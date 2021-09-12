@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-"""
-The original SARD implementation from github.com/clinicalml/omop-learn
-"""
-import math
-
-import numpy as np
-import torch
-import torch.nn.functional as F
-from gensim.models import KeyedVectors
-from torch import nn
-=======
 import time
 
 from torch import nn
@@ -18,7 +6,6 @@ import numpy as np
 import torch
 import math
 from gensim.models import KeyedVectors
->>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
 
 '''
 @article{wolf2019transformers,
@@ -181,10 +168,6 @@ class VTClassifer(torch.nn.Module):
     def __init__(
             self, bert_model,
             n_targets=1,
-<<<<<<< HEAD
-            num_dim=4,
-=======
->>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
             attn_classifier=False,
             pred_dropout=True,
             rnn_classifier=False,
@@ -197,10 +180,6 @@ class VTClassifer(torch.nn.Module):
             **kwargs
     ):
         super(VTClassifer, self).__init__()
-<<<<<<< HEAD
-        self.num_dim = num_dim
-=======
->>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
         self.n_targets = n_targets
         self.emb_size = bert_model.embedding_dim
         self.bert = bert_model
@@ -228,23 +207,6 @@ class VTClassifer(torch.nn.Module):
         elif self.convolutional_classifier:
             if self.multi_visit_kernel_conv:
                 self.convs = torch.nn.Conv1d(
-<<<<<<< HEAD
-                    (self.emb_size + self.num_dim), (self.emb_size + self.num_dim) * self.n_parallel_pools,
-                    self.kernel_size_visits
-                )
-                self.maxpool = torch.nn.MaxPool1d(self.bert.max_visits - self.kernel_size_visits)
-                self.linear = torch.nn.Linear((self.emb_size + self.num_dim) * self.n_parallel_pools, n_targets)
-            else:
-                self.convs = torch.nn.Conv1d((self.emb_size + self.num_dim),
-                                             (self.emb_size + self.num_dim) * self.n_parallel_pools, 1)
-                self.maxpool = torch.nn.MaxPool1d(self.bert.max_visits)
-                if self.two_lin_layer_conv:
-                    self.linear1 = torch.nn.Linear((self.emb_size + self.num_dim) * self.n_parallel_pools,
-                                                   (self.emb_size + self.num_dim))
-                    self.linear2 = torch.nn.Linear((self.emb_size + self.num_dim), n_targets)
-                else:
-                    self.linear = torch.nn.Linear((self.emb_size + self.num_dim) * self.n_parallel_pools, n_targets)
-=======
                     self.emb_size, self.emb_size * self.n_parallel_pools, self.kernel_size_visits
                 )
                 self.maxpool = torch.nn.MaxPool1d(self.bert.max_visits - self.kernel_size_visits)
@@ -257,18 +219,13 @@ class VTClassifer(torch.nn.Module):
                     self.linear2 = torch.nn.Linear(self.emb_size, n_targets)
                 else:
                     self.linear = torch.nn.Linear(self.emb_size * self.n_parallel_pools, n_targets)
->>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
 
         elif self.averaging_classifier:
             self.linear = torch.nn.Linear(self.emb_size, n_targets)
             self.dropout = torch.nn.Dropout(bert_model.dropout)
         else:
             self.pooler = torch.nn.Linear(self.bert.max_visits, self.n_parallel_pools)
-<<<<<<< HEAD
-            self.linear = torch.nn.Linear((self.emb_size + self.num_dim) * self.n_parallel_pools, n_targets)
-=======
             self.linear = torch.nn.Linear(self.emb_size * self.n_parallel_pools, n_targets)
->>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
             self.dropout = torch.nn.Dropout(bert_model.dropout)
 
     def forward(self, x, interpret_debug=False):
@@ -352,11 +309,7 @@ class VTClassifer(torch.nn.Module):
             else:
                 pooled = self.pooler(
                     x.transpose(1, 2)
-<<<<<<< HEAD
-                ).view(-1, 10 * (self.emb_size + self.num_dim))
-=======
                 ).view(-1, 10 * self.emb_size)
->>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
                 pooled = self.dropout(pooled)
                 y_pred = self.linear(torch.nn.ReLU()(pooled))
                 if self.n_targets == 1:
@@ -368,22 +321,14 @@ class VisitTransformer(torch.nn.Module):
     def __init__(
             self, n_features=None,
             embedding_dim=300,
-<<<<<<< HEAD
-            n_heads=2, attn_depth=2, num_dim=4,
-=======
             n_heads=2, attn_depth=2,
->>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
             dropout=0.3,
             concept_embedding_path=None,
             time_emb_type='sin',
             use_RNN=False,
             use_mask=False,
             max_days=365,  # all codes before this amount of days before index are treated as one visit
-<<<<<<< HEAD
-            max_visits=40,  # truncate at this to save gpu memory
-=======
             max_visits=131,  # truncate at this to save gpu memory
->>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
             normalize_visits=False,
             normalize_codes=False,
             backwards_attn=False,
@@ -392,11 +337,7 @@ class VisitTransformer(torch.nn.Module):
             **kwargs
     ):
         super(VisitTransformer, self).__init__()
-<<<<<<< HEAD
-        self.num_dim = num_dim
-=======
 
->>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
         self.time_emb_type = time_emb_type
         self.data_set = False
         self.concept_embedding_path = concept_embedding_path
@@ -404,11 +345,7 @@ class VisitTransformer(torch.nn.Module):
         self.device = device
 
         self.n_heads = n_heads
-<<<<<<< HEAD
-        self.embedding_dim = int((embedding_dim - num_dim / n_heads) * n_heads)
-=======
         self.embedding_dim = embedding_dim * n_heads
->>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
         self.dropout = dropout
 
         self.max_days = max_days
@@ -457,11 +394,7 @@ class VisitTransformer(torch.nn.Module):
             ])
         else:
             self.tfs = torch.nn.ModuleList([
-<<<<<<< HEAD
-                TransformerBlock(self.embedding_dim + self.num_dim, self.n_heads, self.dropout,
-=======
                 TransformerBlock(self.embedding_dim, self.n_heads, self.dropout,
->>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
                                  backwards_only=self.backwards_attn)
                 for _ in range(self.attn_depth)
             ])
@@ -496,13 +429,7 @@ class VisitTransformer(torch.nn.Module):
 
         self.data_set = True
 
-<<<<<<< HEAD
-    def forward(self, batch, train=True, return_mask=False):
-        person_range = batch[0]
-        x_num = batch[1]
-=======
     def forward(self, person_range, train=True, return_mask=False):
->>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
 
         use_mask = self.use_mask
 
@@ -623,12 +550,6 @@ class VisitTransformer(torch.nn.Module):
         if self.index_embedding:
             output_emb += indices_embedding
 
-<<<<<<< HEAD
-        # TODO concatenate stuff to embeddings here
-        output_emb = torch.cat([output_emb, x_num[:, None, :].repeat(1, output_emb.shape[1], 1)], dim=2)
-
-=======
->>>>>>> 14e62e9135c625f1210f08955a233cbcfc075d66
         for tf in self.tfs:
             if use_mask:
                 output_emb = tf(output_emb, mask)

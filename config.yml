@@ -1,0 +1,7 @@
+default:
+  database:
+    driver: 'PATH_TO_DRIVER'
+    dbms: 'postgresql'
+    path: 'PATH_TO_SERVER'
+    user: 'MY_USERNAME'
+    password: 'MY_PASSWORD'
